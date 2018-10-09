@@ -1,0 +1,19 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: tf-dis-ps-1-0
+spec:  
+  template:
+    metadata:
+      name: tf-dis-ps-1-0
+      labels:
+        tf: tf-dis-ps-1-0
+    spec:
+      containers:
+      - name: tf-dis-ps-1-0
+        image: tf-1:5000/tf-dis-gpu:1.0
+        ports:
+        - containerPort: 2222
+        command: ["sleep", "3600"]
+      restartPolicy: Never
+
