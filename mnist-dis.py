@@ -3,10 +3,10 @@ Distributed Tensorflow 0.8.0 example of using data parallelism and share model p
 Trains a simple sigmoid neural network on mnist for 20 epochs on three machines using one parameter server. 
 Change the hardcoded host urls below with your own hosts. 
 Run like this: 
-pc-01$ python example.py --job_name="ps" --task_index=0 --ps_hosts=127.0.0.1:2222 --worker_hosts=127.0.0.1:2223,127.0.0.1:2224
-pc-02$ python example.py --job_name="worker" --task_index=0 --ps_hosts=127.0.0.1:2222 --worker_hosts=127.0.0.1:2223,127.0.0.1:2224
-pc-03$ python example.py --job_name="worker" --task_index=1 --ps_hosts=127.0.0.1:2222 --worker_hosts=127.0.0.1:2223,127.0.0.1:2224
-pc-04$ python example.py --job_name="worker" --task_index=2 --ps_hosts=127.0.0.1:2222 --worker_hosts=127.0.0.1:2223,127.0.0.1:2224
+pc-01$ python example.py --job_name="ps" --task_index=0 --ps_hosts=127.0.0.1:2222 --worker_hosts=127.0.0.1:2223,127.0.0.1:2224 --data_dir=/tmp --export_dir=/tmp
+pc-02$ python example.py --job_name="worker" --task_index=0 --ps_hosts=127.0.0.1:2222 --worker_hosts=127.0.0.1:2223,127.0.0.1:2224 --data_dir=/tmp --export_dir=/tmp
+pc-03$ python example.py --job_name="worker" --task_index=1 --ps_hosts=127.0.0.1:2222 --worker_hosts=127.0.0.1:2223,127.0.0.1:2224 --data_dir=/tmp --export_dir=/tmp
+pc-04$ python example.py --job_name="worker" --task_index=2 --ps_hosts=127.0.0.1:2222 --worker_hosts=127.0.0.1:2223,127.0.0.1:2224 --data_dir=/tmp --export_dir=/tmp
 More details here: ischlag.github.io
 '''
 
@@ -23,6 +23,10 @@ tf.app.flags.DEFINE_string("ps_hosts", "127.0.0.1:2222", "ps nodes")
 tf.app.flags.DEFINE_string("worker_hosts", "127.0.0.1:2223", "worker nodes")
 tf.app.flags.DEFINE_string("job_name", "", "Either 'ps' or 'worker'")
 tf.app.flags.DEFINE_integer("task_index", 0, "Index of task within the job")
+tf.app.flags.DEFINE_string("data_dir", "/tmp", "input data path")
+tf.app.flags.DEFINE_string("export_dir", "/tmp", "model export path")
+
+
 
 FLAGS = tf.app.flags.FLAGS
 
